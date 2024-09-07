@@ -45,38 +45,32 @@ limitations under the License.
 
 <!-- Package usage documentation. -->
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/math-base-special-maxabsf
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
-To use in Observable,
-
 ```javascript
-maxabsf = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-maxabsf@umd/browser.js' )
-```
-
-To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
-
-```javascript
-var maxabsf = require( 'path/to/vendor/umd/math-base-special-maxabsf/index.js' )
-```
-
-To include the bundle in a webpage,
-
-```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-maxabsf@umd/browser.js"></script>
-```
-
-If no recognized module system is present, access bundle contents via the global scope:
-
-```html
-<script type="text/javascript">
-(function () {
-    window.maxabsf;
-})();
-</script>
+var maxabsf = require( '@stdlib/math-base-special-maxabsf' );
 ```
 
 #### maxabsf( x, y )
@@ -84,8 +78,8 @@ If no recognized module system is present, access bundle contents via the global
 Returns the maximum absolute single-precision floating-point number.
 
 ```javascript
-var v = maxabsf( -4.2, 3.14 );
-// returns ~4.2
+var v = maxabsf( -4.0, 3.0 );
+// returns 4.0
 
 v = maxabsf( +0.0, -0.0 );
 // returns +0.0
@@ -121,31 +115,23 @@ v = maxabsf( NaN, 3.14 );
 
 <!-- eslint no-undef: "error" -->
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-base-randu@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/math-base-special-maxabsf@umd/browser.js"></script>
-<script type="text/javascript">
-(function () {
+```javascript
+var randu = require( '@stdlib/random-array-uniform' );
+var maxabsf = require( '@stdlib/math-base-special-maxabsf' );
 
-var x;
-var y;
+var opts = {
+    'dtype': 'float32'
+};
+
+var x = randu( 100, -500.0, 500.0, opts );
+var y = randu( 100, -500.0, 500.0, opts );
+
 var v;
 var i;
-
 for ( i = 0; i < 100; i++ ) {
-    x = ( randu() * 1000.0 ) - 500.0;
-    y = ( randu() * 1000.0 ) - 500.0;
-    v = maxabsf( x, y );
-    console.log( 'maxabsf(%d,%d) = %d', x, y, v );
+    v = maxabsf( x[ i ], y[ i ] );
+    console.log( 'maxabsf(%d,%d) = %d', x[ i ], y[ i ], v );
 }
-
-})();
-</script>
-</body>
-</html>
 ```
 
 </section>
@@ -154,7 +140,96 @@ for ( i = 0; i < 100; i++ ) {
 
 <!-- C interface documentation. -->
 
+* * *
 
+<section class="c">
+
+## C APIs
+
+<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<!-- C usage documentation. -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/math/base/special/maxabsf.h"
+```
+
+#### stdlib_base_maxabsf( x, y )
+
+Returns the maximum absolute single-precision floating-point number.
+
+```c
+float out = stdlib_base_maxabsf( -4.2f, 3.14f );
+// returns ~4.2f
+
+out = stdlib_base_maxabsf( 0.0f, -0.0f );
+// returns +0.0f
+```
+
+The function accepts the following arguments:
+
+-   **x**: `[in] float` input value.
+-   **y**: `[in] float` input value.
+
+```c
+float stdlib_base_maxabsf( const float x, const float y );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<!-- C API usage examples. -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/math/base/special/maxabsf.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+int main( void ) {
+    float x;
+    float y;
+    float v;
+    int i;
+
+    for ( i = 0; i < 100; i++ ) {
+        x = ( ( (float)rand() / (float)RAND_MAX ) * 1000.0f ) - 500.0f;
+        y = ( ( (float)rand() / (float)RAND_MAX ) * 1000.0f ) - 500.0f;
+        v = stdlib_base_maxabsf( x, y );
+        printf( "x: %f, y: %f, maxabsf(x, y): %f\n", x, y, v );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
 
 <!-- Section to include cited references. If references are included, add a horizontal rule *before* the section. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
 
